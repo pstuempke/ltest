@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.composee)
+
     // [KTOR]
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.ktor.client.core)
@@ -60,6 +61,14 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.okhttp)
 
+    // [KOIN]
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.composeVM)
+    implementation(libs.koin.composeVM.navigation)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
     implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -68,8 +77,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
-
-
 }
