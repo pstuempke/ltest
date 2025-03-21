@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
+import com.stuempke.luzuatest.navigation.MainNavigation
 import com.stuempke.luzuatest.ui.theme.LuziaTestTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,16 +19,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-
 }
 
-@Composable
-private fun MainNavigation() {
-    val navController = rememberNavController()
 
 
-}
 
 @Preview(showBackground = true)
 @Composable
