@@ -23,7 +23,7 @@ fun createHttpClient(): HttpClient {
         install(Logging)
 
         defaultRequest {
-            url("https://swapi.dev/api")
+            url("https://swapi.dev/api/")
             contentType(ContentType.Application.Json)
         }
     }

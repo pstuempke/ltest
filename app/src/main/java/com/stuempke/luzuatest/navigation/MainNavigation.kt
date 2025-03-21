@@ -1,6 +1,8 @@
 package com.stuempke.luzuatest.navigation
 
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -11,7 +13,7 @@ import com.stuempke.luzuatest.planets.ui.PlanetListScreen
 fun MainNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Routes.PlanetList) {
+    NavHost(modifier = Modifier.statusBarsPadding(), navController = navController, startDestination = Routes.PlanetList) {
         composable<Routes.PlanetList> {
             PlanetListScreen()
         }

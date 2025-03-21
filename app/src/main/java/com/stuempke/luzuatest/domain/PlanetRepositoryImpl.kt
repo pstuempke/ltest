@@ -12,7 +12,7 @@ class PlanetRepositoryImpl(private val remotePlanetDataSource: RemotePlanetDataS
     }
 
     override suspend fun getPlanet(id: String): Result<Planet> {
-        return remotePlanetDataSource.getPlanet(id)
+        return remotePlanetDataSource.getPlanetByName(id)
     }
 
 }

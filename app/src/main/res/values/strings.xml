@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LuziaTest</string>
+    <string name="planetItemClimate">Climate: %1$s</string>
+    <string name="planetItemPopulation">Population: %1$s</string>
 </resources>

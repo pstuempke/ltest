@@ -4,8 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Planet(
-    val id: String,
     val name: String,
-    val description: String,
-    val imageUrl: String
+    val climate: String,
+    val gravity: String,
+    val population: String,
+    val diameter: String,
+    val terrain: String,
+    val url: String,
 )
