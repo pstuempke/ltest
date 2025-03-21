@@ -7,13 +7,18 @@ import org.koin.dsl.module
 import com.stuempke.luzuatest.data.RemotePlanetDataSourceImpl
 import com.stuempke.luzuatest.domain.PlanetRepository
 import com.stuempke.luzuatest.domain.PlanetRepositoryImpl
+import com.stuempke.luzuatest.navigation.NavigationManager
 import com.stuempke.luzuatest.planets.ui.PlanetListScreenViewModel
 import org.koin.core.module.dsl.viewModelOf
 
 import org.koin.dsl.bind
 
 
-val mainModules = module {
+val navigationModule = module {
+    singleOf(::NavigationManager)
+}
+
+val mainModule = module {
     single { createHttpClient() }
     singleOf(::RemotePlanetDataSourceImpl).bind<RemotePlanetDataSource>()
     singleOf(::PlanetRepositoryImpl).bind<PlanetRepository>()

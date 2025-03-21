@@ -4,11 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stuempke.luzuatest.domain.PlanetRepository
 import com.stuempke.luzuatest.domain.model.Planet
+import com.stuempke.luzuatest.navigation.NavigationManager
+import com.stuempke.luzuatest.navigation.Route
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class PlanetListScreenViewModel(private val planetRepository: PlanetRepository) : ViewModel() {
+class PlanetListScreenViewModel(
+    private val navigationManager: NavigationManager,
+    private val planetRepository: PlanetRepository
+) : ViewModel() {
 
     val state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
 
@@ -18,16 +23,19 @@ class PlanetListScreenViewModel(private val planetRepository: PlanetRepository) 
                 .onSuccess { planets -> state.value = ViewState.Content(planets) }
                 .onFailure {
                     Timber.e(it)
-                    this@PlanetListScreenViewModel.state.value = ViewState.Error(it.message ?: "An error occurred")
+                    this@PlanetListScreenViewModel.state.value =
+                        ViewState.Error(it.message ?: "An error occurred")
                 }
         }
     }
 
     fun onViewAction(action: ViewAction) {
         Timber.d("OnAction: $action")
-        when (action) {
-            is ViewAction.PlanetSelected -> {
-                // Handle planet selection
+        viewModelScope.launch {
+            when (action) {
+                is ViewAction.PlanetSelected -> {
+                    navigationManager.navigate(Route.PlanetDetails(name = action.name))
+                }
             }
         }
     }

@@ -2,12 +2,12 @@ package com.stuempke.luzuatest.navigation
 
 import kotlinx.serialization.Serializable
 
-sealed interface Routes {
+sealed interface Route {
 
     @Serializable
-    data object PlanetList : Routes
+    data object PlanetList : Route
 
     @Serializable
-    data class PlanetDetails(val name: String) : Routes
+    data class PlanetDetails(val name: String) : Route
 
 }

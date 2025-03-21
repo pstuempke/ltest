@@ -49,7 +49,7 @@ fun PlanetListScreenContent(
             }
 
             is PlanetListScreenViewModel.ViewState.Content -> {
-                PlanetList(viewState.planets)
+                PlanetList(viewState.planets, onViewAction)
             }
 
             is PlanetListScreenViewModel.ViewState.Error -> {
@@ -71,16 +71,16 @@ fun PlanetList(
         ), verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         items(planets) {
-            PlanetItem(planet = it, onViewAction = onViewAction)
+            PlanetItem(planet = it, onClick = { onViewAction(PlanetListScreenViewModel.ViewAction.PlanetSelected(it.name)) })
         }
     }
 }
 
 @Composable
-fun PlanetItem(planet: Planet, onViewAction: (PlanetListScreenViewModel.ViewAction) -> Unit) {
+fun PlanetItem(planet: Planet, onClick: () -> Unit) {
     Row(
         modifier = Modifier
-            .clickable { onViewAction(PlanetListScreenViewModel.ViewAction.PlanetSelected(name = planet.name)) }
+            .clickable { onClick() }
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.fillMaxWidth().weight(1F)) {
