@@ -15,16 +15,20 @@ class PlanetListScreenViewModel(
     private val planetRepository: PlanetRepository
 ) : ViewModel() {
 
-    val state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
+    private val _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
+    val state: MutableStateFlow<ViewState> = _state
 
     init {
+        getPlanets()
+    }
+
+    private fun getPlanets() {
         viewModelScope.launch {
+            state.value = ViewState.Loading
             planetRepository.getPlanets()
                 .onSuccess { planets -> state.value = ViewState.Content(planets) }
-                .onFailure {
-                    Timber.e(it)
-                    this@PlanetListScreenViewModel.state.value =
-                        ViewState.Error(it.message ?: "An error occurred")
+                .onFailure { error ->
+                    state.value = ViewState.Error(error.message ?: "An error occurred")
                 }
         }
     }
@@ -34,14 +38,17 @@ class PlanetListScreenViewModel(
         viewModelScope.launch {
             when (action) {
                 is ViewAction.PlanetSelected -> {
-                    navigationManager.navigate(Route.PlanetDetails(name = action.name))
+                    navigationManager.navigate(Route.PlanetDetails(url = action.url))
                 }
+
+                is ViewAction.Retry -> getPlanets()
             }
         }
     }
 
     sealed interface ViewAction {
-        data class PlanetSelected(val name: String) : ViewAction
+        data object Retry : ViewAction
+        data class PlanetSelected(val url: String) : ViewAction
     }
 
     sealed interface ViewState {

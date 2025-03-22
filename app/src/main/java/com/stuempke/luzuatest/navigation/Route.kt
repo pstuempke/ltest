@@ -8,6 +8,6 @@ sealed interface Route {
     data object PlanetList : Route
 
     @Serializable
-    data class PlanetDetails(val name: String) : Route
+    data class PlanetDetails(val url: String) : Route
 
 }

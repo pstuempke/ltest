@@ -17,19 +17,7 @@ fun MainNavigation() {
     val navController = rememberNavController()
     val navigationManager: NavigationManager = getKoin().get()
 
-    LaunchedEffect(navigationManager) {
-        navigationManager.navigationEvents.collect { event ->
-            when (event) {
-                is NavigationEvent.NavigateTo -> {
-                    navController.navigate(event.route)
-                }
-
-                NavigationEvent.PopBackStack -> {
-                    navController.popBackStack()
-                }
-            }
-        }
-    }
+    NavigationEffectHandler(navController, navigationManager)
 
     NavHost(
         modifier = Modifier.statusBarsPadding(),
@@ -41,6 +29,21 @@ fun MainNavigation() {
         }
         composable<Route.PlanetDetails> {
             PlanetDetailsScreen()
+        }
+    }
+}
+
+@Composable
+private fun NavigationEffectHandler(
+    navController: androidx.navigation.NavHostController,
+    navigationManager: NavigationManager
+) {
+    LaunchedEffect(navigationManager) {
+        navigationManager.navigationEvents.collect { event ->
+            when (event) {
+                is NavigationEvent.NavigateTo -> navController.navigate(event.route)
+                NavigationEvent.PopBackStack -> navController.popBackStack()
+            }
         }
     }
 }

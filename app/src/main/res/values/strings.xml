@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">LuziaTest</string>
-    <string name="planetItemClimate">Climate: %1$s</string>
-    <string name="planetItemPopulation">Population: %1$s</string>
+    <string name="population">Population: %1$s</string>
+    <string name="gravity">Gravity: %1$s</string>
+    <string name="climate">Climate: %1$s</string>
+    <string name="terrain">Terrain: %1$s</string>
+    <string name="diameter">Diameter: %1$s</string>
 </resources>

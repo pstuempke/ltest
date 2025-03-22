@@ -6,6 +6,6 @@ interface PlanetRepository {
 
     suspend fun getPlanets(): Result<List<Planet>>
 
-    suspend fun getPlanet(id: String): Result<Planet>
+    suspend fun getPlanet(url: String): Result<Planet>
 
 }

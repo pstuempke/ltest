@@ -6,5 +6,5 @@ interface RemotePlanetDataSource {
 
     suspend fun getPlanets(): Result<List<Planet>>
 
-    suspend fun getPlanetByName(id: String): Result<Planet>
+    suspend fun getPlanetByUrl(url: String): Result<Planet>
 }
