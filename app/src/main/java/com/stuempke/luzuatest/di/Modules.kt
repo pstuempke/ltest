@@ -9,7 +9,7 @@ import com.stuempke.luzuatest.domain.PlanetRepository
 import com.stuempke.luzuatest.domain.PlanetRepositoryImpl
 import com.stuempke.luzuatest.navigation.NavigationManager
 import com.stuempke.luzuatest.planets.ui.PlanetListScreenViewModel
-import com.stuempke.luzuatest.planets.ui.PlanetDetailScreenViewModel
+import com.stuempke.luzuatest.planets.ui.PlanetDetailViewModel
 import org.koin.core.module.dsl.viewModelOf
 
 import org.koin.dsl.bind
@@ -25,5 +25,5 @@ val mainModule = module {
     singleOf(::PlanetRepositoryImpl).bind<PlanetRepository>()
 
     viewModelOf(::PlanetListScreenViewModel)
-    viewModelOf(::PlanetDetailScreenViewModel)
+    viewModelOf(::PlanetDetailViewModel)
 }
