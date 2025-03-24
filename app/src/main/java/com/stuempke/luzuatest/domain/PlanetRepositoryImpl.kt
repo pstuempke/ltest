@@ -4,6 +4,7 @@ import com.stuempke.luzuatest.data.RemotePlanetDataSource
 import com.stuempke.luzuatest.data.model.toDomain
 import com.stuempke.luzuatest.di.AppDispatchers
 import com.stuempke.luzuatest.domain.model.Planet
+import com.stuempke.luzuatest.util.mapList
 import kotlinx.coroutines.withContext
 
 import java.util.concurrent.ConcurrentHashMap
@@ -20,11 +21,12 @@ class PlanetRepositoryImpl(
 
 
     override suspend fun getPlanets(): Result<List<Planet>> = withContext(appDispatchers.io) {
-        remotePlanetDataSource.getPlanets().map { it.map { it.toDomain() } }.also { result ->
-            result.getOrNull()?.let { planets ->
-                addToCache(*planets.toTypedArray())
+        remotePlanetDataSource.getPlanets().mapList { it.toDomain() }
+            .also { result ->
+                result.getOrNull()?.let { planets ->
+                    addToCache(*planets.toTypedArray())
+                }
             }
-        }
     }
 
     private fun addToCache(vararg planets: Planet?) {
