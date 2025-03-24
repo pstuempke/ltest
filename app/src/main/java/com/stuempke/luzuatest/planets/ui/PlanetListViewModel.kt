@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class PlanetListScreenViewModel(
+class PlanetListViewModel(
     private val navigationManager: NavigationManager,
     private val planetRepository: PlanetRepository
 ) : ViewModel() {
@@ -40,7 +40,6 @@ class PlanetListScreenViewModel(
                 is ViewAction.PlanetSelected -> {
                     navigationManager.navigate(Route.PlanetDetails(url = action.url))
                 }
-
                 is ViewAction.Retry -> getPlanets()
             }
         }

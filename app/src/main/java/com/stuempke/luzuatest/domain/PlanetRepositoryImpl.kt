@@ -1,18 +1,26 @@
 package com.stuempke.luzuatest.domain
 
 import com.stuempke.luzuatest.data.RemotePlanetDataSource
+import com.stuempke.luzuatest.data.model.toDomain
+import com.stuempke.luzuatest.di.AppDispatchers
 import com.stuempke.luzuatest.domain.model.Planet
+import kotlinx.coroutines.withContext
+
 import java.util.concurrent.ConcurrentHashMap
 
 
-class PlanetRepositoryImpl(private val remotePlanetDataSource: RemotePlanetDataSource) :
+class PlanetRepositoryImpl(
+    private val remotePlanetDataSource: RemotePlanetDataSource,
+    private val appDispatchers: AppDispatchers,
+) :
     PlanetRepository {
 
     // Instead of implementing a full database I just added a small in-memory cache
     private val planetCache = ConcurrentHashMap<String, Planet>()
 
-    override suspend fun getPlanets(): Result<List<Planet>> {
-        return remotePlanetDataSource.getPlanets().also { result ->
+
+    override suspend fun getPlanets(): Result<List<Planet>> = withContext(appDispatchers.io) {
+        remotePlanetDataSource.getPlanets().map { it.map { it.toDomain() } }.also { result ->
             result.getOrNull()?.let { planets ->
                 addToCache(*planets.toTypedArray())
             }
@@ -23,11 +31,11 @@ class PlanetRepositoryImpl(private val remotePlanetDataSource: RemotePlanetDataS
         planetCache.putAll(planets.filterNotNull().associateBy { it.url })
     }
 
-    override suspend fun getPlanet(url: String): Result<Planet> {
-        return planetCache[url]?.let {
+    override suspend fun getPlanet(url: String): Result<Planet> = withContext(appDispatchers.io) {
+        planetCache[url]?.let {
             Result.success(it)
         } ?: run {
-            val result = remotePlanetDataSource.getPlanetByUrl(url)
+            val result = remotePlanetDataSource.getPlanetByUrl(url).map { it.toDomain() }
             result.also { res ->
                 res.getOrNull()?.let { planet ->
                     addToCache(planet)
@@ -35,5 +43,4 @@ class PlanetRepositoryImpl(private val remotePlanetDataSource: RemotePlanetDataS
             }
         }
     }
-
 }

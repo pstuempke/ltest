@@ -28,7 +28,7 @@ import org.koin.compose.viewmodel.koinViewModel
 
 
 @Composable
-fun PlanetListScreen(viewModel: PlanetListScreenViewModel = koinViewModel()) {
+fun PlanetListScreen(viewModel: PlanetListViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     PlanetListScreenContent(state, viewModel::onViewAction)
 }
@@ -36,24 +36,24 @@ fun PlanetListScreen(viewModel: PlanetListScreenViewModel = koinViewModel()) {
 @Preview
 @Composable
 fun PlanetListScreenContent(
-    viewState: PlanetListScreenViewModel.ViewState = PlanetListScreenViewModel.ViewState.Loading,
-    onViewAction: (PlanetListScreenViewModel.ViewAction) -> Unit = {},
+    viewState: PlanetListViewModel.ViewState = PlanetListViewModel.ViewState.Loading,
+    onViewAction: (PlanetListViewModel.ViewAction) -> Unit = {},
 ) {
     Surface {
         when (viewState) {
-            PlanetListScreenViewModel.ViewState.Loading -> {
+            PlanetListViewModel.ViewState.Loading -> {
                 LoadingMolecule()
             }
 
-            is PlanetListScreenViewModel.ViewState.Content -> {
+            is PlanetListViewModel.ViewState.Content -> {
                 PlanetList(viewState.planets, onViewAction)
             }
 
-            is PlanetListScreenViewModel.ViewState.Error -> {
+            is PlanetListViewModel.ViewState.Error -> {
                 ErrorMolecule(
                     modifier = Modifier.padding(16.dp),
                     message = viewState.message,
-                    onRetry = { onViewAction(PlanetListScreenViewModel.ViewAction.Retry) })
+                    onRetry = { onViewAction(PlanetListViewModel.ViewAction.Retry) })
             }
         }
     }
@@ -64,7 +64,7 @@ fun PlanetListScreenContent(
 @Composable
 fun PlanetList(
     planets: List<Planet> = emptyList(),
-    onViewAction: (PlanetListScreenViewModel.ViewAction) -> Unit = {}
+    onViewAction: (PlanetListViewModel.ViewAction) -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier.padding(
@@ -74,7 +74,7 @@ fun PlanetList(
         items(planets) {
             PlanetItem(
                 planet = it,
-                onClick = { onViewAction(PlanetListScreenViewModel.ViewAction.PlanetSelected(it.url)) })
+                onClick = { onViewAction(PlanetListViewModel.ViewAction.PlanetSelected(it.url)) })
         }
     }
 }

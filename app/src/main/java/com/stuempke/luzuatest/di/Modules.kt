@@ -8,8 +8,9 @@ import com.stuempke.luzuatest.data.RemotePlanetDataSourceImpl
 import com.stuempke.luzuatest.domain.PlanetRepository
 import com.stuempke.luzuatest.domain.PlanetRepositoryImpl
 import com.stuempke.luzuatest.navigation.NavigationManager
-import com.stuempke.luzuatest.planets.ui.PlanetListScreenViewModel
+import com.stuempke.luzuatest.planets.ui.PlanetListViewModel
 import com.stuempke.luzuatest.planets.ui.PlanetDetailViewModel
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.dsl.viewModelOf
 
 import org.koin.dsl.bind
@@ -19,11 +20,16 @@ val navigationModule = module {
     singleOf(::NavigationManager)
 }
 
+
+val dispatcherModule = module {
+    single { AppDispatchers(Dispatchers.Main, Dispatchers.IO, Dispatchers.Default) }
+}
+
 val mainModule = module {
     single { createHttpClient() }
     singleOf(::RemotePlanetDataSourceImpl).bind<RemotePlanetDataSource>()
     singleOf(::PlanetRepositoryImpl).bind<PlanetRepository>()
 
-    viewModelOf(::PlanetListScreenViewModel)
+    viewModelOf(::PlanetListViewModel)
     viewModelOf(::PlanetDetailViewModel)
 }

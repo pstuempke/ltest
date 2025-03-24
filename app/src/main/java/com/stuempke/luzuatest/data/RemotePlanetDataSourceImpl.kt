@@ -1,5 +1,6 @@
 package com.stuempke.luzuatest.data
 
+import com.stuempke.luzuatest.data.model.PlanetDto
 import com.stuempke.luzuatest.domain.model.Planet
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -8,11 +9,11 @@ import timber.log.Timber
 
 class RemotePlanetDataSourceImpl(private val client: HttpClient) : RemotePlanetDataSource {
 
-    override suspend fun getPlanets(): Result<List<Planet>> = runCatching {
-        client.get("planets").body<PaginatedResponse<Planet>>().results
+    override suspend fun getPlanets(): Result<List<PlanetDto>> = runCatching {
+        client.get("planets").body<PaginatedResponse<PlanetDto>>().results
     }
 
-    override suspend fun getPlanetByUrl(url: String): Result<Planet> = runCatching {
-        client.get(url).body<Planet>()
+    override suspend fun getPlanetByUrl(url: String): Result<PlanetDto> = runCatching {
+        client.get(url).body<PlanetDto>()
     }
 }
