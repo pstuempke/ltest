@@ -1,9 +1,13 @@
 package com.stuempke.data
 
+import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.ServerResponseException
+import io.ktor.serialization.ContentConvertException
+import io.ktor.serialization.JsonConvertException
 import timber.log.Timber
+import java.net.ConnectException
 
 suspend inline fun <T> safeCall(
     crossinline block: suspend () -> T
@@ -22,6 +26,9 @@ suspend inline fun <T> safeCall(
     } catch (e: java.net.UnknownHostException) {
         Timber.e(e, "Network error: Unable to resolve host")
         com.stuempke.core.domain.Result.Error(com.stuempke.core.domain.Error.Remote.NO_INTERNET)
+    } catch (e: JsonConvertException) {
+        Timber.e(e, "Serialization error")
+        com.stuempke.core.domain.Result.Error(com.stuempke.core.domain.Error.Remote.SERIALIZATION)
     } catch (e: Exception) {
         Timber.e(e, "Unexpected error")
         com.stuempke.core.domain.Result.Error(com.stuempke.core.domain.Error.Remote.UNKNOWN)
