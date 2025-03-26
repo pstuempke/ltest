@@ -1,9 +1,10 @@
 package com.stuempke.luzuatest
 
 import android.app.Application
-import com.stuempke.luzuatest.di.dispatcherModule
-import com.stuempke.luzuatest.di.mainModule
-import com.stuempke.luzuatest.di.navigationModule
+import com.stuempke.data.di.dataModule
+import com.stuempke.data.di.dispatcherModule
+import com.stuempke.presentation.di.mainModule
+import com.stuempke.presentation.di.navigationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -14,7 +15,7 @@ class LuziaTestApplication : Application() {
         Timber.plant(Timber.DebugTree())
         startKoin {
             androidContext(this@LuziaTestApplication)
-            modules(navigationModule, mainModule, dispatcherModule)
+            modules(navigationModule, mainModule, dispatcherModule, dataModule)
         }
         super.onCreate()
     }

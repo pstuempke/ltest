@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "LuziaTest"
 include(":app")
- 
+include(":data")
+include(":core")
+include(":presentation")

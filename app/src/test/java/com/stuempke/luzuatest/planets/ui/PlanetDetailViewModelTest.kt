@@ -2,8 +2,8 @@ package com.stuempke.luzuatest.planets.ui
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.stuempke.luzuatest.domain.PlanetRepository
-import com.stuempke.luzuatest.domain.model.Planet
+import com.stuempke.core.domain.PlanetRepository
+import com.stuempke.core.domain.model.Planet
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -23,7 +23,7 @@ class PlanetDetailViewModelTest {
     val mainCoroutineRule = MainCoroutineRule()
 
     private val savedStateHandle = SavedStateHandle(mapOf("url" to "url"))
-    private val planetRepository = mockk<PlanetRepository>(relaxed = true)
+    private val planetRepository = mockk<com.stuempke.core.domain.PlanetRepository>(relaxed = true)
     private lateinit var sut: PlanetDetailViewModel
 
     @Before
@@ -33,7 +33,7 @@ class PlanetDetailViewModelTest {
     @Test
     fun `test view model returns content`() = runTest(mainCoroutineRule.testDispatcher) {
         // Arrange: Create a test planet with expected properties
-        val testPlanet = mockk<Planet>(relaxed = true) {
+        val testPlanet = mockk<com.stuempke.core.domain.model.Planet>(relaxed = true) {
             every { name } returns "Test Planet"
             every { url } returns "url"
         }
