@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stuempke.luzuatest.domain.PlanetRepository
 import com.stuempke.luzuatest.domain.model.Planet
+import com.stuempke.luzuatest.domain.onError
+import com.stuempke.luzuatest.domain.onSuccess
 import com.stuempke.luzuatest.navigation.NavigationManager
 import com.stuempke.luzuatest.navigation.Route
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -16,7 +19,7 @@ class PlanetListViewModel(
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
-    val state: MutableStateFlow<ViewState> = _state
+    val state: StateFlow<ViewState> = _state
 
     init {
         getPlanets()
@@ -24,11 +27,11 @@ class PlanetListViewModel(
 
     private fun getPlanets() {
         viewModelScope.launch {
-            state.value = ViewState.Loading
+            _state.value = ViewState.Loading
             planetRepository.getPlanets()
-                .onSuccess { planets -> state.value = ViewState.Content(planets) }
-                .onFailure { error ->
-                    state.value = ViewState.Error(error.message ?: "An error occurred")
+                .onSuccess { planets -> _state.value = ViewState.Content(planets) }
+                .onError { error ->
+                    _state.value = ViewState.Error(error.toString())
                 }
         }
     }

@@ -20,7 +20,6 @@ val navigationModule = module {
     singleOf(::NavigationManager)
 }
 
-
 val dispatcherModule = module {
     single { AppDispatchers(Dispatchers.Main, Dispatchers.IO, Dispatchers.Default) }
 }

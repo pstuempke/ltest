@@ -4,8 +4,8 @@ import com.stuempke.luzuatest.domain.model.Planet
 
 interface PlanetRepository {
 
-    suspend fun getPlanets(): Result<List<Planet>>
+    suspend fun getPlanets(): Result<List<Planet>, Error>
 
-    suspend fun getPlanet(url: String): Result<Planet>
+    suspend fun getPlanet(url: String): Result<Planet, Error>
 
 }
