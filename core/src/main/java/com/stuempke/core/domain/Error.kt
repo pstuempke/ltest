@@ -5,6 +5,8 @@ sealed interface Error {
         NO_INTERNET,
         SERVER,
         SERIALIZATION,
-        UNKNOWN
+        UNKNOWN,
+        NOT_FOUND,
+        UNAUTHORIZED
     }
 }

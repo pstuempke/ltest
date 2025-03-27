@@ -6,9 +6,11 @@ import org.koin.dsl.module
 import com.stuempke.presentation.planetlist.PlanetListViewModel
 import com.stuempke.presentation.planetdetail.PlanetDetailViewModel
 import com.stuempke.presentation.navigation.NavigationManager
+import com.stuempke.presentation.navigation.NavigationManagerImpl
+import org.koin.dsl.bind
 
 val navigationModule = module {
-    singleOf(::NavigationManager)
+    singleOf(::NavigationManagerImpl).bind<NavigationManager>()
 }
 
 val mainModule = module {

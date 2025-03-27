@@ -22,7 +22,14 @@ suspend inline fun <T> safeCall(
         com.stuempke.core.domain.Result.Error(com.stuempke.core.domain.Error.Remote.SERVER)
     } catch (e: ResponseException) {
         Timber.e(e, "Response error: ${e.response.status}")
-        com.stuempke.core.domain.Result.Error(com.stuempke.core.domain.Error.Remote.SERVER)
+        // Extract from the response whatever we need. Status code, headers, etc.
+        val statusCode = e.response.status
+        val error = when (statusCode.value) {
+            401 -> com.stuempke.core.domain.Error.Remote.UNAUTHORIZED
+            404 -> com.stuempke.core.domain.Error.Remote.NOT_FOUND
+            else -> com.stuempke.core.domain.Error.Remote.SERVER
+        }
+        com.stuempke.core.domain.Result.Error(error)
     } catch (e: java.net.UnknownHostException) {
         Timber.e(e, "Network error: Unable to resolve host")
         com.stuempke.core.domain.Result.Error(com.stuempke.core.domain.Error.Remote.NO_INTERNET)

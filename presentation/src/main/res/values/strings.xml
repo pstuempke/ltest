@@ -5,4 +5,5 @@
     <string name="terrain">Terrain: %1$s</string>
     <string name="diameter">Diameter: %1$s</string>
     <string name="planet_details">Planet Details</string>
+    <string name="details_subtitle">Details:</string>
 </resources>

@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stuempke.presentation.R
 import com.stuempke.presentation.common.ErrorMolecule
 import com.stuempke.presentation.common.LoadingMolecule
+import com.stuempke.presentation.model.PlanetUI
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -62,7 +63,7 @@ fun PlanetListScreenContent(
 @Preview
 @Composable
 fun PlanetList(
-    planets: List<com.stuempke.core.domain.model.Planet> = emptyList(),
+    planets: List<PlanetUI> = emptyList(),
     onViewAction: (PlanetListViewModel.ViewAction) -> Unit = {}
 ) {
     LazyColumn(
@@ -73,7 +74,7 @@ fun PlanetList(
         items(planets) {
             PlanetItem(
                 planet = it,
-                onClick = { onViewAction(PlanetListViewModel.ViewAction.PlanetSelected(it.url)) })
+                onClick = { onViewAction(PlanetListViewModel.ViewAction.PlanetSelected(it)) })
         }
     }
 }
@@ -81,7 +82,7 @@ fun PlanetList(
 @Composable
 private fun PlanetItem(
     modifier: Modifier = Modifier,
-    planet: com.stuempke.core.domain.model.Planet,
+    planet: PlanetUI,
     onClick: () -> Unit
 ) {
     ListItem(

@@ -1,8 +1,12 @@
 package com.stuempke.data
 
+import com.stuempke.data.model.PlanetDto
+import com.stuempke.core.domain.Result
+import com.stuempke.core.domain.Error
+
 interface RemotePlanetDataSource {
 
-    suspend fun getPlanets(): com.stuempke.core.domain.Result<List<com.stuempke.data.model.PlanetDto>, com.stuempke.core.domain.Error.Remote>
+    suspend fun getPlanets(): Result<List<PlanetDto>, Error.Remote>
 
-    suspend fun getPlanetByUrl(url: String): com.stuempke.core.domain.Result<com.stuempke.data.model.PlanetDto, com.stuempke.core.domain.Error.Remote>
+    suspend fun getPlanetByUrl(url: String): Result<PlanetDto, Error.Remote>
 }

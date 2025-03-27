@@ -1,4 +1,4 @@
-package com.stuempke.luzuatest.planets.ui
+package com.stuempke.data
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers
