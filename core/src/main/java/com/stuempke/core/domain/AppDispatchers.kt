@@ -1,4 +1,4 @@
-package com.stuempke.data.di
+package com.stuempke.core.domain
 
 import kotlinx.coroutines.CoroutineDispatcher
 

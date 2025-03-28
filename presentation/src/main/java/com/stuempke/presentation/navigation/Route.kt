@@ -2,6 +2,7 @@ package com.stuempke.presentation.navigation
 
 import kotlinx.serialization.Serializable
 
+@Serializable
 sealed interface Route {
 
     @Serializable

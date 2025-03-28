@@ -1,4 +1,4 @@
-package com.stuempke.data
+package com.stuempke.core
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Dispatchers

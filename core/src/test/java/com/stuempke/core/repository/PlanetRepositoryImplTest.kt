@@ -1,21 +1,19 @@
-package com.stuempke.data.repository
+package com.stuempke.core.repository
 
+import com.stuempke.core.MainCoroutineRule
 import com.stuempke.core.domain.Error
 import com.stuempke.core.domain.Result
-import com.stuempke.data.MainCoroutineRule
-import com.stuempke.data.RemotePlanetDataSource
-import com.stuempke.data.di.AppDispatchers
+import com.stuempke.core.domain.repository.PlanetRepositoryImpl
+import com.stuempke.core.domain.datasource.RemotePlanetDataSource
+import com.stuempke.core.domain.AppDispatchers
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class PlanetRepositoryImplTest {
 
     @get:Rule
@@ -25,7 +23,6 @@ class PlanetRepositoryImplTest {
     private lateinit var remoteDataSource: RemotePlanetDataSource
 
     private val planet = planetStub
-    private val planetDto = planetDtoStub
 
     @Before
     fun setup() {
@@ -42,7 +39,7 @@ class PlanetRepositoryImplTest {
     fun `getPlanets should return success and cache planets`() =
         runTest(mainCoroutineRule.testDispatcher) {
             coEvery { remoteDataSource.getPlanets() } returns com.stuempke.core.domain.Result.Success(
-                listOf(planetDto)
+                listOf(planet)
             )
 
             val result = repository.getPlanets()
@@ -59,7 +56,7 @@ class PlanetRepositoryImplTest {
     @Test
     fun `getPlanet should return from remote if not cached`() =
         runTest(mainCoroutineRule.testDispatcher) {
-            coEvery { remoteDataSource.getPlanetByUrl(planet.url) } returns Result.Success(planetDto)
+            coEvery { remoteDataSource.getPlanetByUrl(planet.url) } returns Result.Success(planet)
 
             val result = repository.getPlanet(planet.url)
 

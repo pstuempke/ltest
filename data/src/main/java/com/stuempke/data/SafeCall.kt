@@ -1,13 +1,10 @@
 package com.stuempke.data
 
-import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.serialization.ContentConvertException
 import io.ktor.serialization.JsonConvertException
 import timber.log.Timber
-import java.net.ConnectException
 
 suspend inline fun <T> safeCall(
     crossinline block: suspend () -> T
